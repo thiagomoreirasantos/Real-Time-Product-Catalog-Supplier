@@ -8,7 +8,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-var appsettings = builder.Configuration.GetSection("ApplicationSettings").Get<ApplicationSettings>() ?? throw new InvalidOperationException("Unable to get appsettings");
+var appsettings = builder.Configuration.GetSection(nameof(ApplicationSettings)).Get<ApplicationSettings>() ?? throw new InvalidOperationException("Unable to get appsettings");
 builder.Services.AddSingleton<IApplicationSettings>(appsettings);
 
 builder.Services.AddSwaggerGen();
