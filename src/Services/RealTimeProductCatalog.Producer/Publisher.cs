@@ -33,7 +33,7 @@ namespace RealTimeProductCatalog.Producer
                     Console.WriteLine($"Facility: {message.Facility}-{message.Level} Message: {message.Message}"))
                 .SetErrorHandler((_, e) => Console.WriteLine($"Error: {e.Reason}. Is Fatal: {e.IsFatal}"))
                 .Build();
-
+            
             var deliveryReport = await producer.ProduceAsync("", new Message<long, string>
             {
                 Key = DateTime.UtcNow.Ticks,
