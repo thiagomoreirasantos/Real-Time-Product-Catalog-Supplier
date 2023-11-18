@@ -2,6 +2,6 @@ namespace RealTimeProductCatalog.Producer
 {
     public interface IPublisher
     {
-        Task StartSendingMessages(string content);
+        Task<bool> StartSendingMessages(string content);
     }
 }

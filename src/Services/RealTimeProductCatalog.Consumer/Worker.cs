@@ -1,5 +1,7 @@
+using System.Text.Json;
 using Confluent.Kafka;
 using RealTimeProductCatalog.Infrastructure.Configuration;
+using RealTimeProductCatalog.Model.Entities;
 
 namespace RealTimeProductCatalog.Consumer;
 
@@ -37,9 +39,10 @@ public class Worker : BackgroundService
                 {
                     while (!stoppingToken.IsCancellationRequested)
                     {
-                        _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                        _logger.LogInformation("Consumer running at: {time}", DateTimeOffset.Now);
                         var consumeResult = consumerBuilder.Consume(cancelToken.Token);
-                        _logger.LogInformation($"Message: {consumeResult.Message.Value} received from {consumeResult.TopicPartitionOffset}");
+                        _logger.LogInformation($"Message from {consumeResult.Topic}/{consumeResult.Partition} received from {consumeResult.Offset.Value}");
+                        var product = JsonSerializer.Deserialize<Product>(consumeResult.Message.Value);
                         await Task.Delay(1000, stoppingToken);
                     }
                 }

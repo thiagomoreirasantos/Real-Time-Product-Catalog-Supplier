@@ -23,7 +23,8 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpClient("kafka", c =>
 {
     c.BaseAddress = new Uri(appsettings.Kafka.Cluster.Brokers);
-});
+    c.Timeout = TimeSpan.FromSeconds(30);
+}).SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
 builder.Services.AddScoped<IPublisher, Publisher>();
 
@@ -44,7 +45,11 @@ app.MapControllers();
 
 app.MapPost("/api/v1/products", async (IPublisher producer, IApplicationSettings applicationSettings, Product product) =>
 {
-    await producer.StartSendingMessages(JsonSerializer.Serialize(product));
+    var result = await producer.StartSendingMessages(JsonSerializer.Serialize(product));
+    if (!result)
+    {
+        return Results.BadRequest();
+    }    
     return Results.Ok();
 });
 
