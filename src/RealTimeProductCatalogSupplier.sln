@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealTimeProductCatalog.Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealTimeProductCatalog.Producer", "Services\RealTimeProductCatalog.Producer\RealTimeProductCatalog.Producer.csproj", "{4AF9D8CC-F231-4D25-893C-B22AD3BF7B99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealTimeProductCatalog.Gateway", "Services\RealTimeProductCatalog.Gateway\RealTimeProductCatalog.Gateway.csproj", "{BE8865E8-9D7F-40BF-B58B-BD51A1E89D2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{4AF9D8CC-F231-4D25-893C-B22AD3BF7B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AF9D8CC-F231-4D25-893C-B22AD3BF7B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AF9D8CC-F231-4D25-893C-B22AD3BF7B99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE8865E8-9D7F-40BF-B58B-BD51A1E89D2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE8865E8-9D7F-40BF-B58B-BD51A1E89D2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE8865E8-9D7F-40BF-B58B-BD51A1E89D2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE8865E8-9D7F-40BF-B58B-BD51A1E89D2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2A114815-12BB-4F55-9F5D-A5ADB024B22E} = {819A8C1E-026B-438C-893B-EC652248C405}
@@ -57,5 +63,6 @@ Global
 		{43CEF100-1E96-46EB-903A-8C60C6E29841} = {DA45724C-2120-4CCE-A5AD-100EFAF8667C}
 		{ED89E334-D0A2-41D9-9119-2F94BFFB9BFF} = {7032A842-846B-4047-B3F5-B598158C8641}
 		{4AF9D8CC-F231-4D25-893C-B22AD3BF7B99} = {7032A842-846B-4047-B3F5-B598158C8641}
+		{BE8865E8-9D7F-40BF-B58B-BD51A1E89D2A} = {7032A842-846B-4047-B3F5-B598158C8641}
 	EndGlobalSection
 EndGlobal
