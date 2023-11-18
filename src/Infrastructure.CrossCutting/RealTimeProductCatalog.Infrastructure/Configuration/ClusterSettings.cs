@@ -2,6 +2,6 @@ namespace RealTimeProductCatalog.Infrastructure.Configuration
 {
     public class ClusterSettings
     {
-        public required IList<string> Brokers { get; set; }
+        public required string Brokers { get; set; }
     }
 }

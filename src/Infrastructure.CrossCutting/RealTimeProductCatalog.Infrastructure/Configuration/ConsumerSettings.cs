@@ -2,7 +2,7 @@ namespace RealTimeProductCatalog.Infrastructure.Configuration
 {
     public class ConsumerSettings
     {        
-        public required IList<TopicSettings> Topics { get; set; }
+        public required TopicSettings Topic { get; set; }
         public required string AutoCommitIntervalMs { get; set; }
         public required string GroupId { get; set; }
         public required string Workers { get; set; }

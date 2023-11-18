@@ -1,10 +1,16 @@
 using RealTimeProductCatalog.Consumer;
+using RealTimeProductCatalog.Infrastructure.Configuration;
 
-IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices(services =>
-    {
+var builder = Host.CreateDefaultBuilder(args)
+    .ConfigureServices(( hostBuilderContext, services) =>
+    {        
+        var appsettings = hostBuilderContext.Configuration.GetSection(nameof(ApplicationSettings)).Get<ApplicationSettings>() ?? throw new InvalidOperationException("Unable to get appsettings");
+
+        services.AddSingleton<IApplicationSettings>(appsettings);
+
         services.AddHostedService<Worker>();
-    })
-    .Build();
+    });
 
-host.Run();
+var host = builder.Build();
+await host.RunAsync();
+ 
