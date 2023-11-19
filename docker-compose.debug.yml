@@ -1,0 +1,32 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+
+version: '3.4'
+
+services:
+  realtimeproductcatalogconsumer:
+    image: realtimeproductcatalogconsumer
+    build:
+      context: .
+      dockerfile: src/Services/RealTimeProductCatalog.Consumer/Dockerfile
+      args:
+        - configuration=Debug
+    ports:
+      - 5214:5214
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+
+  realtimeproductcatalogapi:
+    image: realtimeproductcatalogapi
+    build:
+      context: .
+      dockerfile: src/Api/RealTimeProductCatalog.Api/Dockerfile
+      args:
+        - configuration=Debug
+    ports:
+      - 5214:5214
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
