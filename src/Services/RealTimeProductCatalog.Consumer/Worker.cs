@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Confluent.Kafka;
+using RealTimeProductCatalog.Gateway;
 using RealTimeProductCatalog.Infrastructure.Configuration;
 using RealTimeProductCatalog.Model.Entities;
 
@@ -9,13 +10,15 @@ public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
     private IApplicationSettings _applicationSettings { get; set; }
+    private readonly ISinkGateway _sinkGateway;
     private readonly string _topic;
 
-    public Worker(ILogger<Worker> logger, IApplicationSettings applicationSettings)
+    public Worker(ILogger<Worker> logger, IApplicationSettings applicationSettings, ISinkGateway sinkGateway)
     {
         _logger = logger;
         _applicationSettings = applicationSettings;
         _topic = _applicationSettings.Kafka.Producer.Topic;
+        _sinkGateway = sinkGateway;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -55,7 +58,19 @@ public class Worker : BackgroundService
 
                         _logger.LogInformation($"Message from {consumeResult.Topic}/{consumeResult.Partition} received from {consumeResult.Offset.Value}");
                         var product = JsonSerializer.Deserialize<Product>(consumeResult.Message.Value);
-                        await Task.Delay(1000, stoppingToken);
+                        if (product is null)
+                        {
+                            throw new ArgumentNullException(nameof(product));
+                        }
+
+                        var response = await _sinkGateway.Deliver(product);
+                        if (!response.IsSuccessStatusCode)
+                        {
+                           consumerBuilder.Pause(new List<TopicPartition> { new TopicPartition(consumeResult.Topic, consumeResult.Partition) });
+                        }else
+                        {
+                            consumerBuilder.Resume(new List<TopicPartition> { new TopicPartition(consumeResult.Topic, consumeResult.Partition)});
+                        }                        
                     }
                 }
                 catch (OperationCanceledException e)

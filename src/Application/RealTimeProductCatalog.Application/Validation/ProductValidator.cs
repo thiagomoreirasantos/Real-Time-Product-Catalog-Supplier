@@ -1,7 +1,7 @@
 using FluentValidation;
 using RealTimeProductCatalog.Model.Entities;
 
-namespace RealTimeProductCatalog.Api.Validation
+namespace RealTimeProductCatalog.Application.Validation
 {
     public class ProductValidator: AbstractValidator<Product>
     {

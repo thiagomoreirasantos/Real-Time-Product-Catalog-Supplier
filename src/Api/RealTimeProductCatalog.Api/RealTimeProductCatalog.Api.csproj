@@ -6,8 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.8.0" />
+  <ItemGroup>    
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
@@ -16,6 +15,7 @@
     <ProjectReference Include="..\..\Infrastructure.CrossCutting\RealTimeProductCatalog.Infrastructure\RealTimeProductCatalog.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Services\RealTimeProductCatalog.Producer\RealTimeProductCatalog.Producer.csproj" />
     <ProjectReference Include="..\..\Business\RealTimeProductCatalog.Model\RealTimeProductCatalog.Model.csproj" />
+    <ProjectReference Include="..\..\Application\RealTimeProductCatalog.Application\RealTimeProductCatalog.Application.csproj" />
   </ItemGroup>
 
 </Project>
