@@ -1,4 +1,5 @@
 using System.Text.Json;
+using RealTimeProductCatalog.Api.Validation;
 using RealTimeProductCatalog.Infrastructure.Configuration;
 using RealTimeProductCatalog.Model.Entities;
 using RealTimeProductCatalog.Producer;
@@ -45,12 +46,19 @@ app.MapControllers();
 
 app.MapPost("/api/v1/products", async (IPublisher producer, IApplicationSettings applicationSettings, Product product) =>
 {
+    var validator = new ProductValidator();
+    var validationResult = await validator.ValidateAsync(product);
+    if (!validationResult.IsValid)
+    {
+        return Results.BadRequest(validationResult.Errors);
+    }
+    
     var result = await producer.StartSendingMessages(JsonSerializer.Serialize(product));
     if (!result)
     {
-        return Results.BadRequest();
+        return Results.StatusCode(500);
     }    
-    return Results.Ok();
+    return Results.Created("/api/v1/products",result);
 });
 
 app.Run();
