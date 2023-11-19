@@ -31,10 +31,7 @@ namespace RealTimeProductCatalog.Gateway
                     Content = new StringContent(JsonSerializer.Serialize(product), Encoding.UTF8, "application/json"),
                 };
 
-                var response = await client.SendAsync(httpRequestMessage) ?? new HttpResponseMessage(HttpStatusCode.InternalServerError)
-                {
-                    Content = new StringContent("Failed to deliver message to sink")
-                };
+                var response = await client.SendAsync(httpRequestMessage);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -45,7 +42,10 @@ namespace RealTimeProductCatalog.Gateway
                     _logger.LogError($"Failed to deliver message to {response?.RequestMessage?.RequestUri}");
                 }
 
-                return response;
+                return response ?? new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent("Failed to deliver message to sink")
+                }; ;
             }
             catch (Exception ex)
             {

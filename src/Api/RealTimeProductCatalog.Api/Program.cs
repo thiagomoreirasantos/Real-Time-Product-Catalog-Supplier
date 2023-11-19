@@ -35,9 +35,9 @@ builder.Services.AddScoped<IProductHandler, ProductHandler>();
 
 #region [HttpClient]
 builder.Services.AddHttpClient();
-builder.Services.AddHttpClient("kafka", c =>
+builder.Services.AddHttpClient(appsettings.Kafka.Destination.Name, c =>
 {
-    c.BaseAddress = new Uri(appsettings.Kafka.Cluster.Brokers);
+    c.BaseAddress = new Uri(appsettings.Kafka.Destination.Url);
     c.Timeout = TimeSpan.FromSeconds(30);
 }).SetHandlerLifetime(TimeSpan.FromMinutes(5));
 #endregion
