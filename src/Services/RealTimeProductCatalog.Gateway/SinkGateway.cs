@@ -17,19 +17,20 @@ namespace RealTimeProductCatalog.Gateway
         {
             _logger = logger;
             _httpClientFactory = httpClientFactory;
-            _appssettings = appssettings;
+            _appssettings = appssettings;            
         }
 
         public async Task<HttpResponseMessage> Deliver(Product product)
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
+                var client = _httpClientFactory.CreateClient(_appssettings.Kafka.Destination.Name);
 
-                var httpRequestMessage = new HttpRequestMessage(new HttpMethod(""), "")
+
+                var httpRequestMessage = new HttpRequestMessage(new HttpMethod(_appssettings.Kafka.Destination.Method), _appssettings.Kafka.Destination.Url)
                 {
                     Content = new StringContent(JsonSerializer.Serialize(product), Encoding.UTF8, "application/json"),
-                };
+                };                
 
                 var response = await client.SendAsync(httpRequestMessage);
 
@@ -45,7 +46,7 @@ namespace RealTimeProductCatalog.Gateway
                 return response ?? new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
                     Content = new StringContent("Failed to deliver message to sink")
-                }; ;
+                };
             }
             catch (Exception ex)
             {
