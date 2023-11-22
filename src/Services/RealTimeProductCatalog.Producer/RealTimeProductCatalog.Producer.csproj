@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure.CrossCutting\RealTimeProductCatalog.Infrastructure\RealTimeProductCatalog.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Application\RealTimeProductCatalog.Application\RealTimeProductCatalog.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

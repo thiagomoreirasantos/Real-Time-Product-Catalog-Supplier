@@ -1,4 +1,4 @@
-namespace RealTimeProductCatalog.Producer
+namespace RealTimeProductCatalog.Application.Interfaces
 {
     public interface IPublisher
     {

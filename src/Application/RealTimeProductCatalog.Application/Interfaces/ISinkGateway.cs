@@ -1,6 +1,6 @@
 using RealTimeProductCatalog.Model.Entities;
 
-namespace RealTimeProductCatalog.Gateway
+namespace RealTimeProductCatalog.Application.Interfaces
 {
     public interface ISinkGateway
     {

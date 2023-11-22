@@ -1,6 +1,6 @@
 using Polly;
 
-namespace RealTimeProductCatalog.Application.Policies
+namespace RealTimeProductCatalog.Application.Interfaces
 {
     public interface IRetryPolicyHandler
     {

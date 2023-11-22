@@ -1,13 +1,16 @@
 using Confluent.Kafka;
+using RealTimeProductCatalog.Application.Interfaces;
 using RealTimeProductCatalog.Infrastructure.Configuration;
+using RealTimeProductCatalog.Infrastructure.Interfaces;
 
 namespace RealTimeProductCatalog.Consumer
 {
-    public class Consumer : IConsumer
+    public class Consumer : IKafkaConsumer
     {
         public readonly IApplicationSettings _applicationSettings;
         private readonly ConsumerConfig _consumerConfig;
         private readonly ILogger<Consumer> _logger;
+        private IConsumer<Ignore, string> consumer;
 
         public Consumer(IApplicationSettings applicationSettings, ILogger<Consumer> logger)
         {
@@ -23,6 +26,8 @@ namespace RealTimeProductCatalog.Consumer
                 EnableAutoOffsetStore = _applicationSettings.Kafka.Consumer.EnableAutoOffsetStore,
                 AutoCommitIntervalMs = _applicationSettings.Kafka.Consumer.AutoCommitIntervalMs,
             };
+
+            consumer = new ConsumerBuilder<Ignore, string>(_consumerConfig).Build();
         }
 
         public ConsumeResult<Ignore, string> ConsumeKafkaStream()
@@ -33,12 +38,10 @@ namespace RealTimeProductCatalog.Consumer
 
             try
             {
-                using (var consumer = new ConsumerBuilder<Ignore, string>(_consumerConfig).Build())
+                using (consumer)
                 {
                     try
                     {
-                        consumer.Subscribe(_applicationSettings.Kafka.Consumer.Topic.Name);
-
                         consumeResult = consumer.Consume(cancelToken.Token);
 
                         _logger.LogInformation($"Consumed message '{consumeResult.Message.Value}' at: '{consumeResult.TopicPartitionOffset}'.");
@@ -51,6 +54,11 @@ namespace RealTimeProductCatalog.Consumer
                         _logger.LogInformation($"OperationCanceledException: {e.Message}");
                         consumer.Close();
                     }
+                    catch (KafkaException e)
+                    {
+                        _logger.LogInformation($"KafkaException: {e.Message}");
+                        consumer.Close();
+                    }
 
                     return consumeResult;
                 }
@@ -61,17 +69,20 @@ namespace RealTimeProductCatalog.Consumer
                 return new ConsumeResult<Ignore, string>();
             }
         }
-        
-        public void Pause(List<TopicPartition> topicPartitions)
+
+        public void Pause()
         {
-            var consumer = new ConsumerBuilder<Ignore, string>(_consumerConfig).Build();
-            consumer.Pause(topicPartitions);
+            consumer.Pause(this.consumer.Assignment);
         }
 
-        public void Resume(List<TopicPartition> topicPartitions)
+        public void Resume()
         {
-            var consumer = new ConsumerBuilder<Ignore, string>(_consumerConfig).Build();
-            consumer.Resume(topicPartitions);
+            consumer.Resume(this.consumer.Assignment);
+        }
+
+        public void Subscribe(string topic)
+        {
+            consumer.Subscribe(topic);
         }
     }
 }

@@ -1,7 +1,9 @@
 using System.Net;
 using Confluent.Kafka;
 using Microsoft.Extensions.Logging;
+using RealTimeProductCatalog.Application.Interfaces;
 using RealTimeProductCatalog.Infrastructure.Configuration;
+using RealTimeProductCatalog.Infrastructure.Interfaces;
 
 namespace RealTimeProductCatalog.Producer
 {

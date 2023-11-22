@@ -1,10 +1,9 @@
 using System.Text.Json;
 using FluentValidation.Results;
-using RealTimeProductCatalog.Application.Dtos;
-using RealTimeProductCatalog.Application.Map;
+using RealTimeProductCatalog.Application.Interfaces;
 using RealTimeProductCatalog.Application.Validation;
 using RealTimeProductCatalog.Model.Entities;
-using RealTimeProductCatalog.Producer;
+
 
 namespace RealTimeProductCatalog.Application.Service
 {

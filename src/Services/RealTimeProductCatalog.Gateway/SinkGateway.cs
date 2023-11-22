@@ -2,7 +2,10 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using Polly.Retry;
+using RealTimeProductCatalog.Application.Interfaces;
 using RealTimeProductCatalog.Infrastructure.Configuration;
+using RealTimeProductCatalog.Infrastructure.Interfaces;
 using RealTimeProductCatalog.Model.Entities;
 
 namespace RealTimeProductCatalog.Gateway
@@ -12,12 +15,14 @@ namespace RealTimeProductCatalog.Gateway
         private readonly ILogger<SinkGateway> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IApplicationSettings _appssettings;
+        private readonly IRetryPolicyHandler _retryPolicyHandler;
 
-        public SinkGateway(ILogger<SinkGateway> logger, IHttpClientFactory httpClientFactory, IApplicationSettings appssettings)
+        public SinkGateway(ILogger<SinkGateway> logger, IHttpClientFactory httpClientFactory, IApplicationSettings appssettings, IRetryPolicyHandler retryPolicyHandler)
         {
             _logger = logger;
             _httpClientFactory = httpClientFactory;
-            _appssettings = appssettings;            
+            _appssettings = appssettings;
+            _retryPolicyHandler = retryPolicyHandler;
         }
 
         public async Task<HttpResponseMessage> Deliver(Product product)
@@ -32,7 +37,7 @@ namespace RealTimeProductCatalog.Gateway
                     Content = new StringContent(JsonSerializer.Serialize(product), Encoding.UTF8, "application/json"),
                 };                
 
-                var response = await client.SendAsync(httpRequestMessage);
+                var response = await _retryPolicyHandler.GetPolicy().ExecuteAsync(async () =>  await client.SendAsync(httpRequestMessage));
 
                 if (response.IsSuccessStatusCode)
                 {

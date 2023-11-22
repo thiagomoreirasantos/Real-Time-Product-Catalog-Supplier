@@ -1,6 +1,8 @@
 using System.Text.Json;
+using RealTimeProductCatalog.Application.Interfaces;
 using RealTimeProductCatalog.Gateway;
 using RealTimeProductCatalog.Infrastructure.Configuration;
+using RealTimeProductCatalog.Infrastructure.Interfaces;
 using RealTimeProductCatalog.Model.Entities;
 
 namespace RealTimeProductCatalog.Consumer;
@@ -10,10 +12,10 @@ public class Worker : BackgroundService
     private readonly ILogger<Worker> _logger;
     private IApplicationSettings _applicationSettings { get; set; }
     private readonly ISinkGateway _sinkGateway;
-    private readonly IConsumer _consumer;
+    private readonly IKafkaConsumer _consumer;
     private readonly string _topic;
 
-    public Worker(ILogger<Worker> logger, IApplicationSettings applicationSettings, ISinkGateway sinkGateway, IConsumer consumer)
+    public Worker(ILogger<Worker> logger, IApplicationSettings applicationSettings, ISinkGateway sinkGateway, IKafkaConsumer consumer)
     {
         _logger = logger;
         _applicationSettings = applicationSettings;
@@ -26,6 +28,8 @@ public class Worker : BackgroundService
     {
         try
         {
+            _consumer.Subscribe(_topic);
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Consumer running at: {time}", DateTimeOffset.Now);
