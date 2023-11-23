@@ -1,7 +1,3 @@
-using RealTimeProductCatalog.Consumer;
-using RealTimeProductCatalog.Infrastructure.Configuration;
-using RealTimeProductCatalog.Infrastructure.Interfaces;
-
 var builder = Host.CreateDefaultBuilder(args)
     .ConfigureServices(( hostBuilderContext, services) =>
     {        

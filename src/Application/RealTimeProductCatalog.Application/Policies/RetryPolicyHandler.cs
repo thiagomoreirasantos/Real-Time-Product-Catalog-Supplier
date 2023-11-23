@@ -1,12 +1,3 @@
-using System.Net;
-using Microsoft.Extensions.Logging;
-using Polly;
-using Polly.Contrib.WaitAndRetry;
-using Polly.Fallback;
-using Polly.Retry;
-using RealTimeProductCatalog.Application.Interfaces;
-using RealTimeProductCatalog.Infrastructure.Interfaces;
-
 namespace RealTimeProductCatalog.Application.Policies
 {
     public class RetryPolicyHandler : IRetryPolicyHandler

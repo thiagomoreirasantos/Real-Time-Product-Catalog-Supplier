@@ -1,8 +1,3 @@
-using Confluent.Kafka;
-using RealTimeProductCatalog.Application.Interfaces;
-using RealTimeProductCatalog.Infrastructure.Configuration;
-using RealTimeProductCatalog.Infrastructure.Interfaces;
-
 namespace RealTimeProductCatalog.Consumer
 {
     public class Consumer : IKafkaConsumer

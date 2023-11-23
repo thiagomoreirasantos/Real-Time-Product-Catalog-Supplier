@@ -1,13 +1,3 @@
-using System.Text.Json;
-using RealTimeProductCatalog.Application.Dtos;
-using RealTimeProductCatalog.Application.Map;
-using RealTimeProductCatalog.Application.Policies;
-using RealTimeProductCatalog.Application.Service;
-using RealTimeProductCatalog.Application.Validation;
-using RealTimeProductCatalog.Infrastructure.Configuration;
-using RealTimeProductCatalog.Model.Entities;
-using RealTimeProductCatalog.Producer;
-
 var builder = WebApplication.CreateBuilder(args);
 
 #region [Add services to the container.]

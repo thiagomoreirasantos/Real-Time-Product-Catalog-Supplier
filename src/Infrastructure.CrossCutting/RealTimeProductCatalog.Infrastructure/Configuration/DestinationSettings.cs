@@ -1,5 +1,3 @@
-using System.Net;
-
 namespace RealTimeProductCatalog.Infrastructure.Configuration
 {
     public class DestinationSettings

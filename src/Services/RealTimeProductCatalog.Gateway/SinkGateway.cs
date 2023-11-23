@@ -1,13 +1,3 @@
-using System.Net;
-using System.Text;
-using System.Text.Json;
-using Microsoft.Extensions.Logging;
-using Polly.Retry;
-using RealTimeProductCatalog.Application.Interfaces;
-using RealTimeProductCatalog.Infrastructure.Configuration;
-using RealTimeProductCatalog.Infrastructure.Interfaces;
-using RealTimeProductCatalog.Model.Entities;
-
 namespace RealTimeProductCatalog.Gateway
 {
     public class SinkGateway : ISinkGateway

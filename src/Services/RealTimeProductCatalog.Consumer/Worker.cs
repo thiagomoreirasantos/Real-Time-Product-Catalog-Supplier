@@ -1,10 +1,3 @@
-using System.Text.Json;
-using RealTimeProductCatalog.Application.Interfaces;
-using RealTimeProductCatalog.Gateway;
-using RealTimeProductCatalog.Infrastructure.Configuration;
-using RealTimeProductCatalog.Infrastructure.Interfaces;
-using RealTimeProductCatalog.Model.Entities;
-
 namespace RealTimeProductCatalog.Consumer;
 
 public class Worker : BackgroundService

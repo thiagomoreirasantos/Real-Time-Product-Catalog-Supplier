@@ -1,10 +1,3 @@
-using System.Text.Json;
-using FluentValidation.Results;
-using RealTimeProductCatalog.Application.Interfaces;
-using RealTimeProductCatalog.Application.Validation;
-using RealTimeProductCatalog.Model.Entities;
-
-
 namespace RealTimeProductCatalog.Application.Service
 {
     public class ProductHandler: IProductHandler

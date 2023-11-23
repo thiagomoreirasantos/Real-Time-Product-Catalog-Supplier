@@ -1,5 +1,3 @@
-using RealTimeProductCatalog.Model.Enums;
-
 namespace RealTimeProductCatalog.Model.Entities
 {
     public class Color
