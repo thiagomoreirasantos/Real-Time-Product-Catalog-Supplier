@@ -1,13 +1,13 @@
 namespace RealTimeProductCatalog.Consumer
 {
-    public class Consumer : IKafkaConsumer
+    public class KafkaConsumer: IKafkaConsumer
     {
         public readonly IApplicationSettings _applicationSettings;
         private readonly ConsumerConfig _consumerConfig;
-        private readonly ILogger<Consumer> _logger;
+        private readonly ILogger<KafkaConsumer> _logger;
         private IConsumer<Ignore, string> consumer;
 
-        public Consumer(IApplicationSettings applicationSettings, ILogger<Consumer> logger)
+        public KafkaConsumer(IApplicationSettings applicationSettings, ILogger<KafkaConsumer> logger)
         {
             _applicationSettings = applicationSettings;
             _logger = logger;

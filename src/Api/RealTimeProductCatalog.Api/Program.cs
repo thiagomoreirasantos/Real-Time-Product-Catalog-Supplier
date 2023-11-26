@@ -1,3 +1,6 @@
+using RealTimeProductCatalog.Consumer;
+using RealTimeProductCatalog.Gateway;
+
 var builder = WebApplication.CreateBuilder(args);
 
 #region [Add services to the container.]
@@ -23,6 +26,8 @@ builder.Services.AddSingleton<IApplicationSettings>(appsettings);
 builder.Services.AddScoped<IPublisher, Publisher>();
 builder.Services.AddScoped<IRetryPolicyHandler, RetryPolicyHandler>();
 builder.Services.AddScoped<IProductHandler, ProductHandler>();
+builder.Services.AddScoped<IKafkaConsumer, KafkaConsumer>();
+builder.Services.AddScoped<ISinkGateway, SinkGateway>();
 #endregion
 
 #region [HttpClient]

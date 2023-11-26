@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\Services\RealTimeProductCatalog.Producer\RealTimeProductCatalog.Producer.csproj" />
     <ProjectReference Include="..\..\Business\RealTimeProductCatalog.Model\RealTimeProductCatalog.Model.csproj" />
     <ProjectReference Include="..\..\Application\RealTimeProductCatalog.Application\RealTimeProductCatalog.Application.csproj" />
+    <ProjectReference Include="..\..\Services\RealTimeProductCatalog.Consumer\RealTimeProductCatalog.Consumer.csproj" />
   </ItemGroup>
 
 </Project>
