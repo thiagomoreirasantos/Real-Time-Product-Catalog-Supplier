@@ -11,3 +11,5 @@ global using RealTimeProductCatalog.Model.Entities;
 global using RealTimeProductCatalog.Application.Validation;
 global using System.Text.Json;
 global using FluentValidation;
+global using RealTimeProductCatalog.Application.Dtos;
+global using RealTimeProductCatalog.Model.Enums;
