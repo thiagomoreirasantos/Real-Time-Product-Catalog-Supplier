@@ -5,6 +5,8 @@ namespace RealTimeProductCatalog.Application.Policies
         private readonly ILogger<RetryPolicyHandler> _logger;
         private readonly IApplicationSettings _applicationSettings;
         private readonly IKafkaConsumer _consumer;
+        private readonly object _lockPause = new();
+        private readonly object _lockResume = new();
 
         public RetryPolicyHandler(ILogger<RetryPolicyHandler> logger, IApplicationSettings applicationSettings, IKafkaConsumer consumer)
         {
@@ -27,8 +29,11 @@ namespace RealTimeProductCatalog.Application.Policies
 
                     if (retryCount == 1)
                     {
-                        context["PolicyKey"] = "RetryPolicy";
-                        _consumer.Pause();
+                        lock (_lockPause)
+                        {
+                            context["PolicyKey"] = Guid.NewGuid().ToString();
+                            _consumer.Pause();
+                        }
                     }
                 });
 
@@ -39,9 +44,12 @@ namespace RealTimeProductCatalog.Application.Policies
                 {
                     _logger.LogError($"Failed to deliver message to sink. Retrying {context.PolicyKey}.");
 
-                    if (context.PolicyKey == "RetryPolicy")
+                    lock (_lockResume)
                     {
-                        _consumer.Resume();
+                        if (context.PolicyKey == Guid.NewGuid().ToString())
+                        {
+                            _consumer.Resume();
+                        }
                     }
 
                     return await Task.FromResult(res.Result).ConfigureAwait(false);
