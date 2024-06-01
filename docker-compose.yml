@@ -73,27 +73,7 @@ services:
     ports:
       - 19000:9000
     environment:
-      KAFKA_BROKERCONNECT: kafka_1:29092,kafka_2:29093,kafka_3:29094
-
-  realtimeproductcatalogconsumer:
-    image: realtimeproductcatalogconsumer
-    depends_on:
-      - kafka_1
-    build:
-      context: .
-      dockerfile: src/Services/RealTimeProductCatalog.Consumer/Dockerfile      
-    ports:
-      - 44352:44352
-
-  realtimeproductcatalogapi:
-    image: realtimeproductcatalogapi
-    depends_on:
-      - kafka_1
-    build:
-      context: .
-      dockerfile: src/Api/RealTimeProductCatalog.Api/Dockerfile      
-    ports:
-      - 5214:5214
+      KAFKA_BROKERCONNECT: kafka_1:29092,kafka_2:29093,kafka_3:29094  
 
 networks:
   broker-kafka:
