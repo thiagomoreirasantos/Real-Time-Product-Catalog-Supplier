@@ -1,34 +1,21 @@
 using MassTransit;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+using MassTransit.KafkaIntegration;
+using Real_Time_Product_Catalog_Consumer.Services;
+using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace Real_Time_Product_Catalog_Consumer;
 
-public class MessageConsumer : BackgroundService, IConsumer<Message>
-{
-    private readonly ILogger<MessageConsumer> _logger;
-
-    public MessageConsumer(ILogger<MessageConsumer> logger)
-    {
-        _logger = logger;
-    }
-
+public class MessageConsumer: IConsumer<Message>
+{    
+    
     public Task Consume(ConsumeContext<Message> context)
     {
-        object message = context.Message;
-        
-        return Task.CompletedTask;
-    }
-
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        while (!stoppingToken.IsCancellationRequested)
+        if (context == null)
         {
-            if (_logger.IsEnabled(LogLevel.Information))
-            {
-                _logger.LogInformation("Consumer running at: {time}", DateTimeOffset.Now);
-            }
-            await Task.Delay(1000, stoppingToken);
+            throw new ArgumentNullException(nameof(context));
         }
+
+        return Task.CompletedTask;     
     }
 }

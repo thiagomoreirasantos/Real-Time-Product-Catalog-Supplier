@@ -1,10 +1,24 @@
 ﻿using Real_Time_Product_Catalog_Consumer;
 using MassTransit;
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Polly.Retry;
 
 var builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddHostedService<MessageConsumer>();
+builder.Services.AddHostedService<PoolingService>();
 
 var services = new ServiceCollection();
+
+services.AddHttpClient("",config =>
+{
+    config.BaseAddress = new Uri("");
+    config.Timeout = TimeSpan.FromMinutes(5);
+});
+
 services.AddMassTransit(x =>
 {
     x.UsingInMemory();
@@ -13,13 +27,13 @@ services.AddMassTransit(x =>
     {   
         rider.AddConsumer<MessageConsumer>();
 
-        rider.UsingKafka((context, k) =>
+        rider.UsingKafka((context, cfg) =>
         {
-            k.Host("localhost:9092,localhost:9093,localhost:9094");
+            cfg.Host("localhost:9092,localhost:9093,localhost:9094");
 
-            k.TopicEndpoint<Message>("produtct-catalog","productsink",e=>
+            cfg.TopicEndpoint<Message>("produtct-catalog","productsink",e=>
             {
-                e.ConfigureConsumer<MessageConsumer>(context);
+                e.ConfigureConsumer<MessageConsumer>(context);                
             });
         });
     });

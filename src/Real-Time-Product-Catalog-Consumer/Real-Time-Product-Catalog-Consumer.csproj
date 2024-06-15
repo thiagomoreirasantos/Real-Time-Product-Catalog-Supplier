@@ -12,5 +12,6 @@
     <PackageReference Include="MassTransit.Kafka" Version="8.2.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+    <PackageReference Include="Polly.Extensions" Version="8.4.0" />
   </ItemGroup>
 </Project>
