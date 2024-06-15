@@ -14,7 +14,7 @@ public class PoolingService : BackgroundService
     {
         _logger = logger;        
         _busControl = busControl;
-    }    
+    }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {        
@@ -31,7 +31,7 @@ public class PoolingService : BackgroundService
 
                 endpointConfigurator.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
 
-                endpointConfigurator.UseInMemoryOutbox();
+                //endpointConfigurator.UseInMemoryOutbox();
             });
 
             await Task.Delay(1000, stoppingToken);

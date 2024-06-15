@@ -1,8 +1,4 @@
 using MassTransit;
-using MassTransit.KafkaIntegration;
-using Real_Time_Product_Catalog_Consumer.Services;
-using System.Net.Http;
-using System.Net.Http.Json;
 
 namespace Real_Time_Product_Catalog_Consumer;
 
