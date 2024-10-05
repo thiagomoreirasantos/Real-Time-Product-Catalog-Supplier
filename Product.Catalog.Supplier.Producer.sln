@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Catalog.Supplier.Pr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Catalog.Supplier.Application", "src\Product.Catalog.Supplier.Application\Product.Catalog.Supplier.Application.csproj", "{894EC2BD-2116-423D-BC03-77ABEC680C48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product.Catalog.Supplier.DataContracts", "src\Product.Catalog.Supplier.DataContracts\Product.Catalog.Supplier.DataContracts.csproj", "{EBD84551-7F26-4099-914F-75EBEA8DD493}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Catalog.Supplier.DataContracts", "src\Product.Catalog.Supplier.DataContracts\Product.Catalog.Supplier.DataContracts.csproj", "{EBD84551-7F26-4099-914F-75EBEA8DD493}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

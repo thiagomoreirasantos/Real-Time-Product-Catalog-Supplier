@@ -3,6 +3,7 @@ using Product.Catalog.Supplier.Application.Configuration;
 using Product.Catalog.Supplier.Application.Entities;
 using Product.Catalog.Supplier.Application.Services;
 using Product.Catalog.Supplier.DataContracts;
+using Product.Catalog.Supplier.Producer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddOptions<ApplicationSettings>().Bind(builder.Configuration.GetSection(nameof(ApplicationSettings))).ValidateDataAnnotations();
-builder.Services.AddScoped<IStreamService, StreamService>();
+builder.Services.AddKafkaProducer(builder);
+builder.Services.AddTransient<IStreamService, StreamService>();
 
 var app = builder.Build();
 

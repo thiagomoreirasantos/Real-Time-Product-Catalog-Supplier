@@ -11,11 +11,18 @@ using Product.Catalog.Supplier.DataContracts;
 
 namespace Product.Catalog.Supplier.Application.Services
 {
-    public class StreamService(ILogger<StreamService> logger, IProducerAccessor producerAccessor, IOptions<ApplicationSettings> options) : IStreamService
+    public class StreamService : IStreamService
     {
-        private readonly ILogger<StreamService> _logger = logger;
-        private readonly IProducerAccessor _producerAccessor = producerAccessor;
-        private readonly ApplicationSettings _settings = options.Value;
+        private readonly ILogger<StreamService> _logger;
+        private readonly IProducerAccessor _producerAccessor;
+        private readonly ApplicationSettings _settings;
+
+        public StreamService(ILogger<StreamService> logger, IProducerAccessor producerAccessor, IOptions<ApplicationSettings> options)
+        {
+            _logger = logger;
+            _producerAccessor = producerAccessor;
+            _settings = options.Value;
+        }
 
         public async Task<Result> HandleMessage(ProductDto productData)
         {
