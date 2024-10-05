@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Product.Catalog.Supplier.Application.Configuration;
 using Product.Catalog.Supplier.Application.Entities;
+using Product.Catalog.Supplier.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddOptions<ApplicationSettings>().Bind(builder.Configuration.GetSection(nameof(ApplicationSettings))).ValidateDataAnnotations();
-
+builder.Services.AddScoped<IStreamService, StreamService>();
 
 var app = builder.Build();
 
@@ -22,10 +23,20 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/v1/products/{stream_name}", ([FromRoute(Name = "stream_name")] string streamName, ProductData newProduct) =>
+app.MapPost("/v1/products/{stream_name}", ([FromRoute(Name = "stream_name")] string streamName, ProductData newProduct, IStreamService streamService) =>
 {
-    ArgumentNullException.ThrowIfNull(newProduct);
+    if (string.IsNullOrEmpty(streamName)) Results.BadRequest();
+
+    if (newProduct is null) Results.BadRequest();
+    
+    ArgumentNullException.ThrowIfNull(streamService);
+
+    return Results.Ok();
+    
 })
+.Produces<ProductData>(StatusCodes.Status201Created) 
+.Produces(StatusCodes.Status404NotFound)
+.Produces(StatusCodes.Status500InternalServerError)
 .WithName("Products")
 .WithOpenApi();
 
