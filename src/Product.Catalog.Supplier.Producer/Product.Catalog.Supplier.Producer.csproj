@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Product.Catalog.Supplier.Application\Product.Catalog.Supplier.Application.csproj" />
+    <ProjectReference Include="..\Product.Catalog.Supplier.Application\Product.Catalog.Supplier.Application.csproj" />
   </ItemGroup>
 
 </Project>

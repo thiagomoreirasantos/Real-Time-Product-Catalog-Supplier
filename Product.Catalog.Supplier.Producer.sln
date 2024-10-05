@@ -7,9 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{38E5BB1E-1F4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Catalog.Supplier.Producer", "src\Product.Catalog.Supplier.Producer\Product.Catalog.Supplier.Producer.csproj", "{86D9F7FD-0F9A-45B3-A981-874309DC9D7B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Catalog.Supplier.Application", "Product.Catalog.Supplier.Application\Product.Catalog.Supplier.Application.csproj", "{894EC2BD-2116-423D-BC03-77ABEC680C48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Catalog.Supplier.Application", "src\Product.Catalog.Supplier.Application\Product.Catalog.Supplier.Application.csproj", "{894EC2BD-2116-423D-BC03-77ABEC680C48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product.Catalog.Supplier.DataContracts", "Product.Catalog.Supplier.DataContracts\Product.Catalog.Supplier.DataContracts.csproj", "{EBD84551-7F26-4099-914F-75EBEA8DD493}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product.Catalog.Supplier.DataContracts", "src\Product.Catalog.Supplier.DataContracts\Product.Catalog.Supplier.DataContracts.csproj", "{EBD84551-7F26-4099-914F-75EBEA8DD493}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
