@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Product.Catalog.Supplier.Application.Configuration;
 using Product.Catalog.Supplier.Application.Entities;
 using Product.Catalog.Supplier.Application.Services;
+using Product.Catalog.Supplier.DataContracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,13 +24,22 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/v1/products/{stream_name}", ([FromRoute(Name = "stream_name")] string streamName, ProductData newProduct, IStreamService streamService) =>
+app.MapPost("/v1/products/{stream_name}", ([FromRoute(Name = "stream_name")] string streamName, HttpContext context, ProductData newProduct, IStreamService streamService) =>
 {
     if (string.IsNullOrEmpty(streamName)) Results.BadRequest();
 
     if (newProduct is null) Results.BadRequest();
-    
-    ArgumentNullException.ThrowIfNull(streamService);
+
+    if (streamService is null) Results.BadRequest();
+
+    var messageDataHeaders = new MessageDataHeaders
+    {
+        MessageId = context.Request.Headers["message_id"].ToString(),
+        CorrelationId = context.Request.Headers["correlation_id"].ToString(),
+        PartitionKey = context.Request.Headers["partition_key"].FirstOrDefault(),
+        MessageType = context.Request.Headers["message_type"].ToString(),
+        Timestamp = context.Request.Headers["timestamp"].ToString()
+    };
 
     return Results.Ok();
     
