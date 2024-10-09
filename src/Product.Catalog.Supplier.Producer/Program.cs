@@ -30,9 +30,9 @@ app.MapPost("/v1/products/{stream_name}", ([FromRoute(Name = "stream_name")] str
 {
     if (string.IsNullOrEmpty(streamName)) Results.BadRequest();
 
-    if (newProduct is null) Results.BadRequest();
+    if (newProduct == null) return Results.BadRequest();
 
-    if (streamService is null) Results.BadRequest();
+    if (streamService is null) return Results.BadRequest();
 
     var messageDataHeaders = new MessageDataHeaders
     {
@@ -49,10 +49,10 @@ app.MapPost("/v1/products/{stream_name}", ([FromRoute(Name = "stream_name")] str
         messageDataHeaders.PartitionKey ?? string.Empty,
         messageDataHeaders.MessageType ?? string.Empty,
         messageDataHeaders.Timestamp ?? string.Empty,
-        newProduct);
+        Payload: newProduct);
 
     var streamResult = streamService?.HandleMessage(product);
-    if (streamResult is null) Results.BadRequest();
+    if (streamResult is null) return Results.BadRequest();
 
     return Results.Ok();
     
