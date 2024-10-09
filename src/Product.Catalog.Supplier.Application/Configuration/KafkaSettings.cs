@@ -2,7 +2,7 @@
 {
     public class KafkaSettings
     {
-        public KafkaClusterSettings Cluster { get; set; }
+        public required KafkaClusterSettings Cluster { get; set; }
 
         public int MessageTimeoutMs { get; set; }
 
@@ -12,6 +12,6 @@
 
         public int MessageMaxBytes { get; set; }
 
-        public required IList<KafkaProducerSettings> Producers { get; set; }
+        public required KafkaProducerSettings Producer { get; set; }
     }
 }
