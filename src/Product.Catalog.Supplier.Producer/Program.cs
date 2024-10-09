@@ -43,6 +43,17 @@ app.MapPost("/v1/products/{stream_name}", ([FromRoute(Name = "stream_name")] str
         Timestamp = context.Request.Headers["timestamp"].ToString()
     };
 
+    var product = new ProductDto(streamName,
+        messageDataHeaders.MessageId ?? string.Empty,
+        messageDataHeaders.CorrelationId ?? string.Empty,
+        messageDataHeaders.PartitionKey ?? string.Empty,
+        messageDataHeaders.MessageType ?? string.Empty,
+        messageDataHeaders.Timestamp ?? string.Empty,
+        newProduct);
+
+    var streamResult = streamService?.HandleMessage(product);
+    if (streamResult is null) Results.BadRequest();
+
     return Results.Ok();
     
 })
